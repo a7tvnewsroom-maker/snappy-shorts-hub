@@ -1,13 +1,56 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useRef, useEffect } from "react";
+import { mockNews } from "@/data/mockNews";
+import NewsReel from "@/components/NewsReel";
+import CommentsSheet from "@/components/CommentsSheet";
+import BottomNav from "@/components/BottomNav";
 
 const Index = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [commentsOpen, setCommentsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const scrollTop = container.scrollTop;
+      const itemHeight = window.innerHeight;
+      const newIndex = Math.round(scrollTop / itemHeight);
+      if (newIndex !== activeIndex && newIndex >= 0 && newIndex < mockNews.length) {
+        setActiveIndex(newIndex);
+      }
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, [activeIndex]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <>
+      <meta name="theme-color" content="#0a0a0a" />
+      <div
+        ref={containerRef}
+        className="h-[100dvh] w-full overflow-y-scroll snap-container no-scrollbar"
+      >
+        {mockNews.map((news, index) => (
+          <NewsReel
+            key={news.id}
+            news={news}
+            isActive={index === activeIndex}
+            onOpenComments={() => setCommentsOpen(true)}
+          />
+        ))}
       </div>
-    </div>
+
+      <CommentsSheet
+        isOpen={commentsOpen}
+        onClose={() => setCommentsOpen(false)}
+        commentsCount={mockNews[activeIndex]?.comments || 0}
+      />
+
+      <BottomNav />
+    </>
   );
 };
 
