@@ -1,56 +1,52 @@
-import { useState, useRef, useEffect } from "react";
-import { mockNews } from "@/data/mockNews";
-import NewsReel from "@/components/NewsReel";
+import { useState } from "react";
+import { mockPosts } from "@/data/mockPosts";
+import Header from "@/components/Header";
+import Stories from "@/components/Stories";
+import CreatePost from "@/components/CreatePost";
+import PostCard from "@/components/PostCard";
 import CommentsSheet from "@/components/CommentsSheet";
-import BottomNav from "@/components/BottomNav";
 
 const Index = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
   const [commentsOpen, setCommentsOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [selectedPostComments, setSelectedPostComments] = useState(0);
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const handleScroll = () => {
-      const scrollTop = container.scrollTop;
-      const itemHeight = window.innerHeight;
-      const newIndex = Math.round(scrollTop / itemHeight);
-      if (newIndex !== activeIndex && newIndex >= 0 && newIndex < mockNews.length) {
-        setActiveIndex(newIndex);
-      }
-    };
-
-    container.addEventListener("scroll", handleScroll);
-    return () => container.removeEventListener("scroll", handleScroll);
-  }, [activeIndex]);
+  const openComments = (commentsCount: number) => {
+    setSelectedPostComments(commentsCount);
+    setCommentsOpen(true);
+  };
 
   return (
-    <>
-      <meta name="theme-color" content="#0a0a0a" />
-      <div
-        ref={containerRef}
-        className="h-[100dvh] w-full overflow-y-scroll snap-container no-scrollbar"
-      >
-        {mockNews.map((news, index) => (
-          <NewsReel
-            key={news.id}
-            news={news}
-            isActive={index === activeIndex}
-            onOpenComments={() => setCommentsOpen(true)}
-          />
-        ))}
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header />
+      
+      {/* Main content with proper padding for fixed header */}
+      <main className="pt-[108px] pb-4">
+        <Stories />
+        
+        <div className="h-2" />
+        
+        <CreatePost />
+        
+        <div className="h-2" />
+        
+        {/* Feed */}
+        <div className="space-y-2">
+          {mockPosts.map((post) => (
+            <PostCard
+              key={post.id}
+              post={post}
+              onOpenComments={() => openComments(post.comments)}
+            />
+          ))}
+        </div>
+      </main>
 
       <CommentsSheet
         isOpen={commentsOpen}
         onClose={() => setCommentsOpen(false)}
-        commentsCount={mockNews[activeIndex]?.comments || 0}
+        commentsCount={selectedPostComments}
       />
-
-      <BottomNav />
-    </>
+    </div>
   );
 };
 
