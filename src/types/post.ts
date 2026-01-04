@@ -1,27 +1,27 @@
 export interface Post {
   id: string;
+  type: "news" | "reel" | "motivation";
   author: {
     name: string;
     avatar: string;
     verified: boolean;
   };
-  content: string;
+  content?: string;
   media?: {
     type: "image" | "video";
     url: string;
+    thumbnail?: string;
+  };
+  motivation?: {
+    quote: string;
+    author: string;
+    gradient: string;
   };
   createdAt: string;
-  reactions: {
-    like: number;
-    love: number;
-    haha: number;
-    wow: number;
-    sad: number;
-    angry: number;
-  };
+  likes: number;
   comments: number;
   shares: number;
-  isSponsored?: boolean;
+  views?: number;
 }
 
 export interface Comment {
@@ -33,7 +33,12 @@ export interface Comment {
   text: string;
   likes: number;
   createdAt: string;
-  replies?: Comment[];
 }
 
-export type ReactionType = "like" | "love" | "haha" | "wow" | "sad" | "angry";
+export interface Reel {
+  id: string;
+  thumbnail: string;
+  videoUrl: string;
+  views: string;
+  author: string;
+}

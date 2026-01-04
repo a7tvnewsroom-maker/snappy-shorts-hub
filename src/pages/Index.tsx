@@ -3,34 +3,39 @@ import { mockPosts } from "@/data/mockPosts";
 import Header from "@/components/Header";
 import Stories from "@/components/Stories";
 import CreatePost from "@/components/CreatePost";
+import ReelsSection from "@/components/ReelsSection";
 import PostCard from "@/components/PostCard";
 import CommentsSheet from "@/components/CommentsSheet";
+import ReelViewer from "@/components/ReelViewer";
 
 const Index = () => {
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [selectedPostComments, setSelectedPostComments] = useState(0);
+  const [reelViewerOpen, setReelViewerOpen] = useState(false);
+  const [selectedReelId, setSelectedReelId] = useState("");
 
   const openComments = (commentsCount: number) => {
     setSelectedPostComments(commentsCount);
     setCommentsOpen(true);
   };
 
+  const openReel = (reelId: string) => {
+    setSelectedReelId(reelId);
+    setReelViewerOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Main content with proper padding for fixed header */}
-      <main className="pt-[108px] pb-4">
+      {/* Main content */}
+      <main className="pt-[120px] pb-6 px-3 space-y-3">
         <Stories />
-        
-        <div className="h-2" />
-        
         <CreatePost />
-        
-        <div className="h-2" />
+        <ReelsSection onOpenReel={openReel} />
         
         {/* Feed */}
-        <div className="space-y-2">
+        <div className="space-y-3">
           {mockPosts.map((post) => (
             <PostCard
               key={post.id}
@@ -45,6 +50,12 @@ const Index = () => {
         isOpen={commentsOpen}
         onClose={() => setCommentsOpen(false)}
         commentsCount={selectedPostComments}
+      />
+
+      <ReelViewer
+        isOpen={reelViewerOpen}
+        onClose={() => setReelViewerOpen(false)}
+        initialReelId={selectedReelId}
       />
     </div>
   );
