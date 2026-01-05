@@ -36,7 +36,7 @@ export const mockPosts: Post[] = [
     id: "1",
     type: "news",
     author: {
-      name: "GOFLIX News",
+      name: "A7TV News",
       avatar: "https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?w=100&h=100&fit=crop",
       verified: true,
     },

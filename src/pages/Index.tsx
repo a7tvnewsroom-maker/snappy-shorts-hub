@@ -7,15 +7,12 @@ import ReelsSection from "@/components/ReelsSection";
 import PostCard from "@/components/PostCard";
 import CommentsSheet from "@/components/CommentsSheet";
 import ReelViewer from "@/components/ReelViewer";
-import MobileFeed from "@/components/MobileFeed";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [selectedPostComments, setSelectedPostComments] = useState(0);
   const [reelViewerOpen, setReelViewerOpen] = useState(false);
   const [selectedReelId, setSelectedReelId] = useState("");
-  const isMobile = useIsMobile();
 
   const openComments = (commentsCount: number) => {
     setSelectedPostComments(commentsCount);
@@ -27,28 +24,12 @@ const Index = () => {
     setReelViewerOpen(true);
   };
 
-  // Mobile: TikTok-style full-page scroll
-  if (isMobile) {
-    return (
-      <div className="h-[100dvh] overflow-hidden bg-background">
-        <MobileFeed onOpenComments={openComments} />
-        
-        <CommentsSheet
-          isOpen={commentsOpen}
-          onClose={() => setCommentsOpen(false)}
-          commentsCount={selectedPostComments}
-        />
-      </div>
-    );
-  }
-
-  // Desktop: Traditional infinite scroll
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
       {/* Main content */}
-      <main className="pt-[120px] pb-6 px-3 space-y-3 max-w-2xl mx-auto">
+      <main className="pt-[120px] pb-6 px-3 space-y-3">
         <Stories />
         <CreatePost />
         <ReelsSection onOpenReel={openReel} />
