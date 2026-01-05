@@ -17,12 +17,7 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-b border-border safe-area-top">
       {/* Logo bar */}
       <div className="flex items-center justify-between px-4 py-3">
-        <h1 className="text-2xl font-display font-extrabold brand-gradient-text">a7tv</h1>
-        <div className="flex items-center gap-1">
-          <span className="text-xs font-medium text-muted-foreground bg-secondary px-2 py-1 rounded-full">
-            📍 Live
-          </span>
-        </div>
+        <h1 className="text-3xl font-logo tracking-wider brand-gradient-text">GOFLIX</h1>
       </div>
 
       {/* Navigation tabs */}
