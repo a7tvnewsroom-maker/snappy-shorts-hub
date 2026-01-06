@@ -51,7 +51,7 @@ const PostCard = ({ post, onOpenComments }: PostCardProps) => {
   };
 
   return (
-    <article className="bg-card rounded-xl shadow-sm overflow-hidden card-hover">
+    <article className="bg-card overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between p-3">
         <div className="flex items-center gap-3">
@@ -59,10 +59,10 @@ const PostCard = ({ post, onOpenComments }: PostCardProps) => {
             <img
               src={post.author.avatar}
               alt={post.author.name}
-              className="h-10 w-10 rounded-full object-cover ring-2 ring-border"
+              className="h-10 w-10 rounded-full object-cover"
             />
             {post.type === "motivation" && (
-              <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full brand-gradient flex items-center justify-center">
+              <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-primary flex items-center justify-center">
                 <span className="text-[10px]">✨</span>
               </div>
             )}
@@ -84,9 +84,7 @@ const PostCard = ({ post, onOpenComments }: PostCardProps) => {
 
       {/* Content based on type */}
       {post.type === "motivation" && post.motivation ? (
-        <div className="px-3 pb-3">
-          <MotivationCard post={post} onLike={handleLike} isLiked={isLiked} />
-        </div>
+        <MotivationCard post={post} onLike={handleLike} isLiked={isLiked} />
       ) : (
         <>
           {/* Text content */}
@@ -103,7 +101,7 @@ const PostCard = ({ post, onOpenComments }: PostCardProps) => {
                 <img
                   src={post.media.url}
                   alt="Post"
-                  className="w-full object-cover max-h-[350px]"
+                  className="w-full object-cover"
                 />
               ) : (
                 <div className="relative" onClick={toggleVideo}>
@@ -111,20 +109,20 @@ const PostCard = ({ post, onOpenComments }: PostCardProps) => {
                     ref={videoRef}
                     src={post.media.url}
                     poster={post.media.thumbnail}
-                    className="w-full object-cover max-h-[350px]"
+                    className="w-full object-cover"
                     loop
                     playsInline
                     muted
                   />
                   {!isVideoPlaying && (
                     <div className="absolute inset-0 flex items-center justify-center bg-foreground/10">
-                      <div className="h-14 w-14 rounded-full bg-card/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                      <div className="h-14 w-14 rounded-full bg-card/90 flex items-center justify-center shadow-lg">
                         <Play className="h-7 w-7 text-card-foreground ml-1" fill="currentColor" />
                       </div>
                     </div>
                   )}
                   {post.views && (
-                    <div className="absolute bottom-3 left-3 flex items-center gap-1 bg-foreground/60 backdrop-blur-sm rounded-full px-2 py-1">
+                    <div className="absolute bottom-3 left-3 flex items-center gap-1 bg-foreground/60 rounded-full px-2 py-1">
                       <Eye className="h-3 w-3 text-primary-foreground" />
                       <span className="text-[10px] font-semibold text-primary-foreground">
                         {formatNumber(post.views)}
