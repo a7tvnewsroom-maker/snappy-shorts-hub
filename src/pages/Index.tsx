@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { mockPosts } from "@/data/mockPosts";
 import Header from "@/components/Header";
-import Stories from "@/components/Stories";
 import ReelsSection from "@/components/ReelsSection";
 import PostCard from "@/components/PostCard";
 import CommentsSheet from "@/components/CommentsSheet";
@@ -41,38 +40,52 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header 
-        onMenuClick={() => setMenuOpen(true)} 
-        onCreateClick={() => setCreateOpen(true)} 
-      />
-      
-      {/* Main content */}
-      <main className="pt-[120px] pb-6">
-        <Stories />
-        <ReelsSection onOpenReel={openReel} />
+      {/* Desktop: Black sides with centered content */}
+      <div className="md:flex">
+        {/* Left black space - desktop only */}
+        <div className="hidden md:block flex-1 bg-background" />
         
-        {/* Feed */}
-        <div className="space-y-2">
-          {mockPosts.slice(0, 2).map((post) => (
-            <PostCard
-              key={post.id}
-              post={post}
-              onOpenComments={() => openComments(post.comments)}
-            />
-          ))}
+        {/* Center content */}
+        <div className="w-full md:w-[600px] md:max-w-[600px] mx-auto">
+          <Header 
+            onMenuClick={() => setMenuOpen(true)} 
+            onCreateClick={() => setCreateOpen(true)} 
+          />
           
-          {/* Advertisement */}
-          <Advertisement />
-          
-          {mockPosts.slice(2).map((post) => (
-            <PostCard
-              key={post.id}
-              post={post}
-              onOpenComments={() => openComments(post.comments)}
+          {/* Main content */}
+          <main className="pt-[120px] pb-6">
+            <ReelsSection 
+              onOpenReel={openReel} 
+              onCreateReel={() => setCreateOpen(true)}
             />
-          ))}
+            
+            {/* Feed */}
+            <div className="space-y-0">
+              {mockPosts.slice(0, 2).map((post) => (
+                <PostCard
+                  key={post.id}
+                  post={post}
+                  onOpenComments={() => openComments(post.comments)}
+                />
+              ))}
+              
+              {/* Advertisement */}
+              <Advertisement />
+              
+              {mockPosts.slice(2).map((post) => (
+                <PostCard
+                  key={post.id}
+                  post={post}
+                  onOpenComments={() => openComments(post.comments)}
+                />
+              ))}
+            </div>
+          </main>
         </div>
-      </main>
+        
+        {/* Right black space - desktop only */}
+        <div className="hidden md:block flex-1 bg-background" />
+      </div>
 
       <CommentsSheet
         isOpen={commentsOpen}

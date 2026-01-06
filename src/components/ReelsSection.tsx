@@ -1,11 +1,16 @@
-import { Play, Eye } from "lucide-react";
+import { Play, Eye, Plus } from "lucide-react";
 import { mockReels } from "@/data/mockPosts";
+import { useState } from "react";
 
 interface ReelsSectionProps {
   onOpenReel: (reelId: string) => void;
+  onCreateReel?: () => void;
 }
 
-const ReelsSection = ({ onOpenReel }: ReelsSectionProps) => {
+const ReelsSection = ({ onOpenReel, onCreateReel }: ReelsSectionProps) => {
+  const [showAll, setShowAll] = useState(false);
+  const displayReels = showAll ? mockReels : mockReels.slice(0, 4);
+
   return (
     <section className="bg-card p-4">
       <div className="flex items-center justify-between mb-3">
@@ -18,20 +23,44 @@ const ReelsSection = ({ onOpenReel }: ReelsSectionProps) => {
             <p className="text-xs text-muted-foreground">Trending now</p>
           </div>
         </div>
-        <button className="text-xs font-semibold text-primary">See all</button>
+        <button 
+          onClick={() => setShowAll(!showAll)}
+          className="text-xs font-semibold text-primary"
+        >
+          {showAll ? "Show less" : "See all"}
+        </button>
       </div>
 
-      <div className="flex gap-2 overflow-x-auto no-scrollbar -mx-1 px-1">
-        {mockReels.map((reel) => (
+      <div className={showAll ? "grid grid-cols-3 gap-2" : "flex gap-2 overflow-x-auto no-scrollbar -mx-1 px-1"}>
+        {/* Create Reel Button */}
+        <button
+          onClick={onCreateReel}
+          className={cn(
+            "relative rounded-xl overflow-hidden group card-hover bg-secondary flex items-center justify-center",
+            showAll ? "aspect-[3/5]" : "flex-shrink-0 w-24 h-40"
+          )}
+        >
+          <div className="flex flex-col items-center gap-2">
+            <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center">
+              <Plus className="h-5 w-5 text-primary-foreground" />
+            </div>
+            <span className="text-[10px] font-semibold text-muted-foreground">Create</span>
+          </div>
+        </button>
+
+        {displayReels.map((reel) => (
           <button
             key={reel.id}
             onClick={() => onOpenReel(reel.id)}
-            className="flex-shrink-0 relative rounded-xl overflow-hidden group card-hover"
+            className={cn(
+              "relative rounded-xl overflow-hidden group card-hover",
+              showAll ? "aspect-[3/5]" : "flex-shrink-0 w-24 h-40"
+            )}
           >
             <img
               src={reel.thumbnail}
               alt={reel.author}
-              className="w-24 h-40 object-cover"
+              className="w-full h-full object-cover"
             />
             {/* Overlay */}
             <div className="absolute inset-0 bg-foreground/40" />
@@ -59,5 +88,9 @@ const ReelsSection = ({ onOpenReel }: ReelsSectionProps) => {
     </section>
   );
 };
+
+function cn(...classes: (string | boolean | undefined)[]) {
+  return classes.filter(Boolean).join(' ');
+}
 
 export default ReelsSection;
