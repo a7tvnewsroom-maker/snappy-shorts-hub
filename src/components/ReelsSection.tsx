@@ -7,10 +7,10 @@ interface ReelsSectionProps {
 
 const ReelsSection = ({ onOpenReel }: ReelsSectionProps) => {
   return (
-    <section className="bg-card rounded-xl shadow-sm p-4">
+    <section className="bg-card p-4">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg brand-gradient flex items-center justify-center">
+          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
             <Play className="h-4 w-4 text-primary-foreground" fill="currentColor" />
           </div>
           <div>
@@ -33,12 +33,12 @@ const ReelsSection = ({ onOpenReel }: ReelsSectionProps) => {
               alt={reel.author}
               className="w-24 h-40 object-cover"
             />
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-transparent to-transparent" />
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-foreground/40" />
             
             {/* Play button */}
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-active:opacity-100 transition-opacity">
-              <div className="h-10 w-10 rounded-full bg-card/80 backdrop-blur-sm flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full bg-card/80 flex items-center justify-center">
                 <Play className="h-5 w-5 text-card-foreground ml-0.5" fill="currentColor" />
               </div>
             </div>
