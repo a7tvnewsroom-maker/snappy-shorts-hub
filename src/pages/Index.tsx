@@ -10,9 +10,7 @@ import ReelViewer from "@/components/ReelViewer";
 import MenuDrawer from "@/components/MenuDrawer";
 import CreatePostDialog from "@/components/CreatePostDialog";
 import Advertisement from "@/components/Advertisement";
-import MobileSnapFeed from "@/components/MobileSnapFeed";
 import { useNavigate } from "react-router-dom";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("home");
@@ -24,7 +22,6 @@ const Index = () => {
   const [createOpen, setCreateOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
 
   useEffect(() => {
     const isDark = document.documentElement.classList.contains("dark");
@@ -58,42 +55,32 @@ const Index = () => {
       case "home":
         return (
           <>
-            {/* Mobile: Snap-to-page feed */}
-            {isMobile ? (
-              <MobileSnapFeed 
-                posts={mockPosts} 
-                onOpenComments={openComments}
-              />
-            ) : (
-              <>
-                <ReelsSection 
-                  onOpenReel={openReel} 
-                  onCreateReel={() => setCreateOpen(true)}
+            <ReelsSection 
+              onOpenReel={openReel} 
+              onCreateReel={() => setCreateOpen(true)}
+            />
+            
+            {/* Feed */}
+            <div className="space-y-0">
+              {mockPosts.slice(0, 2).map((post) => (
+                <PostCard
+                  key={post.id}
+                  post={post}
+                  onOpenComments={() => openComments(post.comments)}
                 />
-                
-                {/* Desktop Feed */}
-                <div className="space-y-0">
-                  {mockPosts.slice(0, 2).map((post) => (
-                    <PostCard
-                      key={post.id}
-                      post={post}
-                      onOpenComments={() => openComments(post.comments)}
-                    />
-                  ))}
-                  
-                  {/* Advertisement */}
-                  <Advertisement />
-                  
-                  {mockPosts.slice(2).map((post) => (
-                    <PostCard
-                      key={post.id}
-                      post={post}
-                      onOpenComments={() => openComments(post.comments)}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
+              ))}
+              
+              {/* Advertisement */}
+              <Advertisement />
+              
+              {mockPosts.slice(2).map((post) => (
+                <PostCard
+                  key={post.id}
+                  post={post}
+                  onOpenComments={() => openComments(post.comments)}
+                />
+              ))}
+            </div>
           </>
         );
       
@@ -149,7 +136,7 @@ const Index = () => {
         {/* Center content */}
         <div className="w-full lg:w-[70%] lg:max-w-[700px] mx-auto">
           {/* Main content */}
-          <main className={isMobile && activeTab === "home" ? "pt-[120px]" : "pt-[120px] lg:pt-6 pb-6"}>
+          <main className="pt-[120px] lg:pt-6 pb-6">
             {renderContent()}
           </main>
         </div>

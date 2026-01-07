@@ -111,19 +111,6 @@
   scrollbar-width: none;
 }
 
-/* Snap scrolling for mobile feed */
-.snap-y {
-  scroll-snap-type: y mandatory;
-}
-
-.snap-start {
-  scroll-snap-align: start;
-}
-
-.snap-always {
-  scroll-snap-stop: always;
-}
-
 /* Scrollbar styles */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
