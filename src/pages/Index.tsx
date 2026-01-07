@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
-import { mockPosts } from "@/data/mockPosts";
+import { mockPosts, mockTrends } from "@/data/mockPosts";
 import Header from "@/components/Header";
+import DesktopSidebar from "@/components/DesktopSidebar";
 import ReelsSection from "@/components/ReelsSection";
 import PostCard from "@/components/PostCard";
+import TrendCard from "@/components/TrendCard";
 import CommentsSheet from "@/components/CommentsSheet";
 import ReelViewer from "@/components/ReelViewer";
 import MenuDrawer from "@/components/MenuDrawer";
 import CreatePostDialog from "@/components/CreatePostDialog";
 import Advertisement from "@/components/Advertisement";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const [activeTab, setActiveTab] = useState("home");
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [selectedPostComments, setSelectedPostComments] = useState(0);
   const [reelViewerOpen, setReelViewerOpen] = useState(false);
@@ -17,6 +21,7 @@ const Index = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const isDark = document.documentElement.classList.contains("dark");
@@ -38,22 +43,18 @@ const Index = () => {
     setReelViewerOpen(true);
   };
 
-  return (
-    <div className="min-h-screen bg-background">
-      {/* Desktop: Black sides with centered content */}
-      <div className="md:flex">
-        {/* Left black space - desktop only */}
-        <div className="hidden md:block flex-1 bg-background" />
-        
-        {/* Center content */}
-        <div className="w-full md:w-[600px] md:max-w-[600px] mx-auto">
-          <Header 
-            onMenuClick={() => setMenuOpen(true)} 
-            onCreateClick={() => setCreateOpen(true)} 
-          />
-          
-          {/* Main content */}
-          <main className="pt-[120px] pb-6">
+  const handleTabChange = (tabId: string) => {
+    setActiveTab(tabId);
+    if (tabId === "profile") {
+      navigate("/profile/me");
+    }
+  };
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "home":
+        return (
+          <>
             <ReelsSection 
               onOpenReel={openReel} 
               onCreateReel={() => setCreateOpen(true)}
@@ -80,11 +81,65 @@ const Index = () => {
                 />
               ))}
             </div>
+          </>
+        );
+      
+      case "reels":
+        return (
+          <ReelsSection 
+            onOpenReel={openReel} 
+            onCreateReel={() => setCreateOpen(true)}
+          />
+        );
+      
+      case "trends":
+        return (
+          <div className="space-y-0">
+            {mockTrends.map((trend) => (
+              <TrendCard key={trend.id} trend={trend} />
+            ))}
+          </div>
+        );
+      
+      case "alerts":
+        return (
+          <div className="p-4 text-center text-muted-foreground">
+            <p className="text-sm">No new alerts</p>
+          </div>
+        );
+      
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Desktop Sidebar */}
+      <DesktopSidebar
+        activeTab={activeTab}
+        onTabChange={handleTabChange}
+        onCreateClick={() => setCreateOpen(true)}
+        onMenuClick={() => setMenuOpen(true)}
+      />
+
+      {/* Mobile Header */}
+      <Header 
+        activeTab={activeTab}
+        onTabChange={handleTabChange}
+        onMenuClick={() => setMenuOpen(true)} 
+        onCreateClick={() => setCreateOpen(true)} 
+      />
+      
+      {/* Main content wrapper */}
+      <div className="lg:pl-[72px]">
+        {/* Center content */}
+        <div className="w-full lg:w-[70%] lg:max-w-[700px] mx-auto">
+          {/* Main content */}
+          <main className="pt-[120px] lg:pt-6 pb-6">
+            {renderContent()}
           </main>
         </div>
-        
-        {/* Right black space - desktop only */}
-        <div className="hidden md:block flex-1 bg-background" />
       </div>
 
       <CommentsSheet
