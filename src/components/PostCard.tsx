@@ -96,20 +96,20 @@ const PostCard = ({ post, onOpenComments }: PostCardProps) => {
 
           {/* Media */}
           {post.media && (
-            <div className="relative">
+            <div className="relative aspect-square">
               {post.media.type === "image" ? (
                 <img
                   src={post.media.url}
                   alt="Post"
-                  className="w-full object-cover"
+                  className="w-full h-full object-cover"
                 />
               ) : (
-                <div className="relative" onClick={toggleVideo}>
+                <div className="relative w-full h-full" onClick={toggleVideo}>
                   <video
                     ref={videoRef}
                     src={post.media.url}
                     poster={post.media.thumbnail}
-                    className="w-full object-cover"
+                    className="w-full h-full object-cover"
                     loop
                     playsInline
                     muted
@@ -123,8 +123,8 @@ const PostCard = ({ post, onOpenComments }: PostCardProps) => {
                   )}
                   {post.views && (
                     <div className="absolute bottom-3 left-3 flex items-center gap-1 bg-foreground/60 rounded-full px-2 py-1">
-                      <Eye className="h-3 w-3 text-primary-foreground" />
-                      <span className="text-[10px] font-semibold text-primary-foreground">
+                      <Eye className="h-3 w-3 text-background" />
+                      <span className="text-[10px] font-semibold text-background">
                         {formatNumber(post.views)}
                       </span>
                     </div>
@@ -140,7 +140,7 @@ const PostCard = ({ post, onOpenComments }: PostCardProps) => {
       <div className="flex items-center justify-between px-3 py-2 text-xs text-muted-foreground">
         <div className="flex items-center gap-1">
           <div className="flex -space-x-1">
-            <span className="h-5 w-5 rounded-full bg-accent flex items-center justify-center text-[10px]">❤️</span>
+            <span className="h-5 w-5 rounded-full bg-like flex items-center justify-center text-[10px]">❤️</span>
             <span className="h-5 w-5 rounded-full bg-primary flex items-center justify-center text-[10px]">👍</span>
           </div>
           <span>{formatNumber(likeCount + (isLiked ? 1 : 0))}</span>
@@ -160,10 +160,15 @@ const PostCard = ({ post, onOpenComments }: PostCardProps) => {
             isLiked ? "text-accent" : "text-muted-foreground"
           )}
         >
-          <Heart
-            className={cn("h-5 w-5 transition-transform", isLiked && "scale-110 animate-scale-in")}
-            fill={isLiked ? "currentColor" : "none"}
-          />
+          <div className={cn(
+            "p-1.5 rounded-full transition-colors",
+            isLiked ? "bg-like text-like-foreground" : ""
+          )}>
+            <Heart
+              className={cn("h-5 w-5 transition-transform", isLiked && "scale-110 animate-scale-in")}
+              fill={isLiked ? "currentColor" : "none"}
+            />
+          </div>
           <span className="text-sm font-medium">Like</span>
         </button>
 

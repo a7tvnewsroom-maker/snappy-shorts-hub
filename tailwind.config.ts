@@ -69,6 +69,10 @@ export default {
         success: "hsl(var(--success))",
         warning: "hsl(var(--warning))",
         info: "hsl(var(--info))",
+        like: {
+          DEFAULT: "hsl(var(--like-bg))",
+          foreground: "hsl(var(--like-fg))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

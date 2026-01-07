@@ -1,6 +1,7 @@
 import { Play, Eye, Plus } from "lucide-react";
 import { mockReels } from "@/data/mockPosts";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface ReelsSectionProps {
   onOpenReel: (reelId: string) => void;
@@ -72,13 +73,13 @@ const ReelsSection = ({ onOpenReel, onCreateReel }: ReelsSectionProps) => {
               </div>
             </div>
 
-            {/* Views */}
+            {/* Views and Author */}
             <div className="absolute bottom-2 left-2 right-2">
-              <div className="flex items-center gap-1 text-primary-foreground">
-                <Eye className="h-3 w-3" />
-                <span className="text-[10px] font-semibold">{reel.views}</span>
+              <div className="flex items-center gap-1">
+                <Eye className="h-3 w-3 text-background" />
+                <span className="text-[10px] font-semibold text-background">{reel.views}</span>
               </div>
-              <p className="text-[10px] text-primary-foreground/80 truncate mt-0.5">
+              <p className="text-[10px] text-background/90 truncate mt-0.5 font-medium">
                 {reel.author}
               </p>
             </div>
@@ -88,9 +89,5 @@ const ReelsSection = ({ onOpenReel, onCreateReel }: ReelsSectionProps) => {
     </section>
   );
 };
-
-function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(' ');
-}
 
 export default ReelsSection;
