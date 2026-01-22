@@ -63,23 +63,23 @@ const ReelsSection = ({ onOpenReel, onCreateReel }: ReelsSectionProps) => {
               alt={reel.author}
               className="w-full h-full object-cover"
             />
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-foreground/40" />
+            {/* Gradient Overlay for better text visibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             
             {/* Play button */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-active:opacity-100 transition-opacity">
-              <div className="h-10 w-10 rounded-full bg-card/80 flex items-center justify-center">
-                <Play className="h-5 w-5 text-card-foreground ml-0.5" fill="currentColor" />
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity">
+              <div className="h-10 w-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+                <Play className="h-5 w-5 text-black ml-0.5" fill="currentColor" />
               </div>
             </div>
 
-            {/* Views and Author */}
+            {/* Views and Author - improved visibility */}
             <div className="absolute bottom-2 left-2 right-2">
-              <div className="flex items-center gap-1">
-                <Eye className="h-3 w-3 text-background" />
-                <span className="text-[10px] font-semibold text-background">{reel.views}</span>
+              <div className="flex items-center gap-1 bg-black/50 rounded-full px-2 py-0.5 w-fit">
+                <Eye className="h-3 w-3 text-white" />
+                <span className="text-[10px] font-bold text-white">{reel.views}</span>
               </div>
-              <p className="text-[10px] text-background/90 truncate mt-0.5 font-medium">
+              <p className="text-xs text-white truncate mt-1 font-semibold drop-shadow-lg">
                 {reel.author}
               </p>
             </div>

@@ -20,10 +20,9 @@ const DesktopSidebar = ({ activeTab, onTabChange, onCreateClick, onMenuClick }: 
   return (
     <aside className="hidden lg:flex fixed left-0 top-0 h-full w-[72px] flex-col items-center py-6 bg-background border-r border-border z-50">
       {/* Logo */}
-      <div className="mb-8">
-        <h1 className="text-xl font-display font-extrabold">
-          <span className="text-primary">G</span>
-          <span className="text-foreground">F</span>
+      <div className="mb-8 px-2">
+        <h1 className="text-lg font-display font-extrabold tracking-tight">
+          <span className="text-primary">GO</span>
         </h1>
       </div>
 
