@@ -64,7 +64,7 @@ const TrendCard = ({ trend }: TrendCardProps) => {
         >
           <div className={cn(
             "p-1.5 rounded-full transition-colors",
-            isLiked ? "bg-like text-like-foreground" : ""
+            isLiked ? "bg-foreground text-background" : ""
           )}>
             <Heart
               className={cn("h-4 w-4 transition-transform", isLiked && "scale-110")}

@@ -57,6 +57,34 @@ export const mockReels: Reel[] = [
     views: "2.1M",
     author: "BeautyPro",
   },
+  {
+    id: "r9",
+    thumbnail: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&h=500&fit=crop",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    views: "6.2M",
+    author: "SportsHub",
+  },
+  {
+    id: "r10",
+    thumbnail: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=300&h=500&fit=crop",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    views: "3.8M",
+    author: "AINews",
+  },
+  {
+    id: "r11",
+    thumbnail: "https://images.unsplash.com/photo-1569163139599-0f4517e36f51?w=300&h=500&fit=crop",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    views: "2.9M",
+    author: "EcoWorld",
+  },
+  {
+    id: "r12",
+    thumbnail: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=300&h=500&fit=crop",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+    views: "4.1M",
+    author: "NatureVibes",
+  },
 ];
 
 export interface TrendCard {
@@ -141,6 +169,42 @@ export const mockTrends: TrendCard[] = [
     likes: 14500,
     comments: 456,
     shares: 890,
+  },
+  {
+    id: "t9",
+    image: "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=1080&h=1080&fit=crop",
+    title: "Every journey starts with a single brave step",
+    aspectRatio: "1:1",
+    likes: 25800,
+    comments: 789,
+    shares: 1890,
+  },
+  {
+    id: "t10",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1080&h=1350&fit=crop",
+    title: "Be the light you wish to see in the world",
+    aspectRatio: "4:5",
+    likes: 19400,
+    comments: 623,
+    shares: 1340,
+  },
+  {
+    id: "t11",
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1080&h=1200&fit=crop",
+    title: "Innovation begins where comfort zone ends",
+    aspectRatio: "9:10",
+    likes: 16200,
+    comments: 534,
+    shares: 978,
+  },
+  {
+    id: "t12",
+    image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1080&h=1080&fit=crop",
+    title: "Music speaks what words cannot express today",
+    aspectRatio: "1:1",
+    likes: 28900,
+    comments: 1023,
+    shares: 2100,
   },
 ];
 
